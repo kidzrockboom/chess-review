@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/kidzrockboom/chess-review/apis"
 )
 
 func main() {
@@ -29,6 +31,10 @@ func main() {
 		fmt.Printf("Improper value (%s) for number of games \n", userInput[1])
 		os.Exit(2)
 	}
+
+	urlString := fmt.Sprintf("https://api.chess.com/pub/player/%s/games/archives", username)
+
+	api.GetChessGames(urlString)
 
 	fmt.Printf("Username is: %s and number of games requested: %d \n", username, numOfGames)
 }
