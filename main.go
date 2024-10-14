@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 
-	"github.com/kidzrockboom/chess-review/apis"
+	"github.com/kidzrockboom/chess-review/api"
 )
 
 func main() {
@@ -34,7 +35,17 @@ func main() {
 
 	urlString := fmt.Sprintf("https://api.chess.com/pub/player/%s/games/archives", username)
 
-	api.GetChessGames(urlString)
+	gamesArchive, err := api.GetGameArchive(urlString)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	games, err := api.GetChessGames(gamesArchive)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(games[0].Pgn)
 
 	fmt.Printf("Username is: %s and number of games requested: %d \n", username, numOfGames)
 }

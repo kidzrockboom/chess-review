@@ -14,9 +14,11 @@ type Archive struct {
 	GamesList []string `json:"archives"`
 }
 
-func GetChessGames(urlString string) ([]models.Game, error) {
-	var games []models.Game
+type Games struct {
+	List []models.Game `json:"games"`
+}
 
+func GetGameArchive(urlString string) ([]string, error) {
 	var jsonData Archive
 
 	res, err := http.Get(urlString)
@@ -36,16 +38,38 @@ func GetChessGames(urlString string) ([]models.Game, error) {
 		log.Fatal(err)
 	}
 
-	fmt.Println(jsonData.GamesList)
-
 	// Store archive list of games locally
 
+	return jsonData.GamesList, nil
+}
+
+func GetChessGames(archiveList []string) ([]models.Game, error) {
+	var games Games
+
 	// Get games from archive list
-	res, err = http.Get(jsonData.GamesList[len(jsonData.GamesList)-1])
+	res, err := http.Get(archiveList[len(archiveList)-1])
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer res.Body.Close()
 
-	return games, nil
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println("Get chess Games")
+		log.Fatal(err)
+	}
+
+	err = json.Unmarshal(body, &games)
+	if err != nil {
+		fmt.Println("Json unmarshall err")
+		log.Fatal(err)
+	}
+
+	return games.List, nil
+}
+
+func GetGamePgn(gamesList []string) ([]string, error) {
+	var pgnList []string
+
+	return pgnList, nil
 }
