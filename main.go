@@ -45,7 +45,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(games[0].Pgn)
+	_, err = api.GetGamePgn(games)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	fmt.Printf("Username is: %s and number of games requested: %d \n", username, numOfGames)
 }

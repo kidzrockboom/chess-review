@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/kidzrockboom/chess-review/models"
 )
@@ -68,8 +69,16 @@ func GetChessGames(archiveList []string) ([]models.Game, error) {
 	return games.List, nil
 }
 
-func GetGamePgn(gamesList []string) ([]string, error) {
+func GetGamePgn(gamesList []models.Game) ([]string, error) {
 	var pgnList []string
+
+	// for i := 0; i < len(gamesList); i++ {
+	// 	temp := strings.Split(gamesList[i].Pgn, "\n")
+	// }
+
+	temp := strings.Split(gamesList[1].Pgn, "\n")
+
+	fmt.Println(temp[2])
 
 	return pgnList, nil
 }
