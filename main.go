@@ -49,6 +49,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(games)
 
 	fmt.Printf("Username is: %s and number of games requested: %d \n", username, numOfGames)
 }

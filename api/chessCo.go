@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/kidzrockboom/chess-review/models"
@@ -72,13 +73,13 @@ func GetChessGames(archiveList []string) ([]models.Game, error) {
 func GetGamePgn(gamesList []models.Game) ([]string, error) {
 	var pgnList []string
 
-	// for i := 0; i < len(gamesList); i++ {
-	// 	temp := strings.Split(gamesList[i].Pgn, "\n")
-	// }
-
-	temp := strings.Split(gamesList[1].Pgn, "\n")
-
-	fmt.Println(temp[2])
-
+	for i := 0; i < len(gamesList); i++ {
+		temp := strings.Split(gamesList[i].Pgn, "\n")
+		re := regexp.MustCompile(`"[^"]+"`)
+		date := re.FindAllString(temp[1], -1)
+		utcTime := re.FindAllString(temp[11], -1)
+		timeControl := re.FindAllString(temp[14], -1)
+		gamePgn := re.FindAllString(temp[19], -1)
+	}
 	return pgnList, nil
 }

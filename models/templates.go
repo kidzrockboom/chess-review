@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Player struct {
 	Username string
@@ -25,4 +29,13 @@ type Game struct {
 	White        Player
 	Black        Player
 	Eco          string
+}
+
+type GameData struct {
+	Date        time.Time
+	UtcTime     time.Time
+	TimeControl string
+	Pgn         string
+	StartTime   time.Time
+	EndTime     time.Time
 }
